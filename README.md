@@ -1,8 +1,8 @@
 # Astro Color Names
 
-### Commands
+![astro-colors.netlify.app](https://cdn.dribbble.com/users/3800131/screenshots/17078957/media/6ceca176980d763462e4b648ad37107a.png)
 
-All commands are run from the root of the project, from a terminal:
+### Commands
 
 | Command            | Action                                       |
 |:----------------   |:-------------------------------------------- |
