@@ -1,0 +1,76 @@
+---
+const { color } = Astro.props;
+---
+
+<li class={`card ${color.name.toLowerCase().replaceAll(' ', '')}`}>
+  <div
+    class="color-display pointer"
+    style={`background-color: ${color.hex};`}
+    title="Click to copy color name"
+  ></div>
+  <h1
+    class="pointer"
+    style={
+      color.name.length >= 19 ? 'font-size: 1.5em; margin: 0.5em;' :
+      color.name.length >= 17 ? 'font-size: 1.5em; margin: 0.7em;' :
+      color.name.length >= 15 ? 'font-size: 1.6em; margin: 0.7em;' :
+      ''
+    }
+    title="Click to copy color name"
+  >
+    { color.name }
+    <a
+      title="Go to NFT page"
+      href={color.url.OpenSea}
+      target="_blank"
+      rel="noreferrer noopener"
+    >
+      <img class="eth" src="/assets/images/ETH.svg" alt="">
+    </a>
+  </h1>
+  <div
+    class="hex-section pointer"
+    title="Click to copy HEX code"
+  >
+    <div class="title uppercase">HEX CODE</div>
+    <div class="hex-value">{ color.hex }</div>
+  </div>
+  <div
+    class="rgb-section pointer"
+    title="Click to copy RGB value"
+  >
+    <div class="title uppercase">RGB VALUE</div>
+    <div class="rgb-value">{ color.rgb }</div>
+  </div>
+</li>
+
+<style lang="sass">
+@import '../styles/settings'
+
+.card
+  margin: 2em
+  +cardSize(15.9375em)
+  +neumorphicShadow
+  border-radius: 2em
+  text-align: center
+  .color-display
+    margin-top: 1.875em
+    +round(8.5em)
+    +neumorphicShadow
+    display: inline-block
+  h1
+    font-size: 1.75em
+  .eth
+    padding: 0 .25em .25em .12em
+    position: absolute
+    width: .65rem
+    opacity: .75
+  .hex-section, .rgb-section
+    margin-bottom: 1em
+    font-size: .875em
+  .title
+    font-size: .875em
+    color: silver
+  .hex-value, .rgb-value
+    font-size: 1.25em
+</style>
