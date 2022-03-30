@@ -1,7 +1,10 @@
 ---
 import MainHead from '../components/MainHead.astro';
 import Card from '../components/Card.astro';
-import data from '../api/colors.json';
+
+// import data from '../api/colors.json';
+const res = await fetch('https://raw.githubusercontent.com/rayc2045/html-reserved-colors/main/src/api/colors.json')
+const data = await res.json();
 ---
 
 <html lang="en">
@@ -24,7 +27,7 @@ import data from '../api/colors.json';
 	</p>
 
 	<ul class="cards animate">
-		{data.map(color => <Card client:visible color={color}/>)}
+		{data.map(color => <Card color={color}/>)}
 	</ul>
 </body>
 </html>
@@ -102,3 +105,32 @@ header
 		font-size: .84em
 </style>
 
+<script type="module">
+import { copyText, playAudio, audiosCatch } from '/src/scripts/utils';
+const copySound = new Audio('/assets/audios/modern-technology-select.wav');
+
+document.body.onmousedown = () => {
+	audiosCatch([copySound]);
+	document.body.onmousedown = '';
+}
+
+document.body.onclick = e => {
+	if (e.target.classList.contains('pointer')) {
+		playAudio(copySound);
+		['name', 'hex', 'rgb'].forEach(prop => copyColorCodeByClassName(e.target, prop));
+	}
+}
+
+function copyColorCodeByClassName(targetEl, prop) {
+	if (targetEl.classList.contains(prop)) {
+		const valueEl = targetEl.parentElement.querySelector(`.${prop}-value`);
+		const content = valueEl.textContent.trim();
+		if (prop === 'name') return copyText(getMinifiedColorName(content));
+		copyText(content);
+	};
+}
+
+function getMinifiedColorName(colorName) {
+  return colorName.split(' ').map(text => text.toLowerCase()).join('');
+}
+</script>
