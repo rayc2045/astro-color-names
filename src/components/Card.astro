@@ -4,12 +4,12 @@ const { color } = Astro.props;
 
 <li class={`card ${color.name.toLowerCase().replaceAll(' ', '')}`}>
   <div
-    class="color-display pointer"
+    class="color-display name pointer"
     style={`background-color: ${color.hex};`}
     title="Click to copy color name"
   ></div>
   <h1
-    class="pointer"
+    class="name name-value pointer"
     style={
       color.name.length >= 19 ? 'font-size: 1.5em; margin: 0.5em;' :
       color.name.length >= 17 ? 'font-size: 1.5em; margin: 0.7em;' :
@@ -29,18 +29,18 @@ const { color } = Astro.props;
     </a>
   </h1>
   <div
-    class="hex-section pointer"
+    class="hex-section"
     title="Click to copy HEX code"
   >
-    <div class="title uppercase">HEX CODE</div>
-    <div class="hex-value">{ color.hex }</div>
+    <div class="title uppercase hex pointer">HEX CODE</div>
+    <div class="hex hex-value pointer">{ color.hex }</div>
   </div>
   <div
-    class="rgb-section pointer"
+    class="rgb-section"
     title="Click to copy RGB value"
   >
-    <div class="title uppercase">RGB VALUE</div>
-    <div class="rgb-value">{ color.rgb }</div>
+    <div class="title uppercase rgb pointer">RGB VALUE</div>
+    <div class="rgb rgb-value pointer">{ color.rgb }</div>
   </div>
 </li>
 
