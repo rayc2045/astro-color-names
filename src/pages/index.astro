@@ -3,7 +3,7 @@ import MainHead from '../components/MainHead.astro';
 import Card from '../components/Card.astro';
 
 // import data from '../data/colors.json';
-const res = await fetch('https://raw.githubusercontent.com/rayc2045/html-reserved-colors/main/src/api/colors.json')
+const res = await fetch('https://raw.githubusercontent.com/rayc2045/html-reserved-colors/main/src/data/colors.json')
 const data = await res.json();
 ---
 
@@ -15,19 +15,19 @@ const data = await res.json();
 	<header class="animate">
 		<h1>Color Names</h1>
 		<p>
-			Modern browsers support { data.length === 141 ? 141 : ''} named colors. Use them by name, Hex color code or RGB value.
+			Modern browsers support { data.length === 141 ? 141 : '' } named colors. Use them by name, Hex color code or RGB value.
 		</p>
 	</header>
 
-	<p class="marketplace animate none">
+	<p class={`marketplace animate ${Object.keys(data[0].url).length > 1 ? '' : 'none'}`}>
 		Current marketplace:&nbsp;
 		<span title="Click to change the marketplace">
-			{ data[0].url.OpenSea }
+			{ Object.keys(data[0].url)[0] }
 		</span>
 	</p>
 
 	<ul class="cards animate">
-		{data.map(color => <Card color={color}/>)}
+		{ data.map(color => <Card color={color}/>) }
 	</ul>
 </body>
 </html>
