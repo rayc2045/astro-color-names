@@ -15,7 +15,7 @@ const data = await res.json();
 	<header class="animate">
 		<h1>Color Names</h1>
 		<p>
-			Modern browsers support { data.length === 141 ? 141 : '' } named colors. Use them by name, Hex color code or RGB value.
+			Modern browsers support 141 named colors. Use them by name, Hex color code or RGB value.
 		</p>
 	</header>
 
@@ -106,8 +106,13 @@ header
 </style>
 
 <script type="module" hoist>
-import { copyText, playAudio, audiosCatch } from '/src/scripts/utils';
+import { getParamsByUrl, copyText, playAudio, audiosCatch } from '/src/scripts/utils';
 const copySound = new Audio('/assets/audios/modern-technology-select.wav');
+const { colors } = getParamsByUrl();
+const colorParams = colors.split(',');
+const nameValueEls = document.querySelectorAll('.name-value');
+
+window.onload = () => init();
 
 document.body.onmousedown = () => {
 	audiosCatch([copySound]);
@@ -118,6 +123,25 @@ document.body.onclick = e => {
 	if (e.target.classList.contains('pointer')) {
 		playAudio(copySound);
 		['name', 'hex', 'rgb'].forEach(key => copyColorCode(e.target, key));
+	}
+}
+
+async function init() {
+	hideCardsNotInParams();
+}
+
+function hideCardsNotInParams() {
+	let count = 0;
+	nameValueEls.forEach(el => {
+		if (!colorParams.includes(
+			getMinifiedColorName(el.textContent.trim()))
+		) {
+			count++;
+			el.parentElement.classList.add('none');
+		}
+	});
+	if (count === nameValueEls.length) {
+		nameValueEls.forEach(el => el.parentElement.classList.remove('none'));
 	}
 }
 
