@@ -27,7 +27,7 @@ const data = await res.json();
 	</p>
 
 	<ul class="cards animate">
-		{ data.map(color => <Card color={color}/>) }
+		{ data.map(color => <Card client:visible color={color}/>) }
 	</ul>
 </body>
 </html>
@@ -105,7 +105,7 @@ header
 		font-size: .84em
 </style>
 
-<script type="module">
+<script type="module" hoist>
 import { copyText, playAudio, audiosCatch } from '/src/scripts/utils';
 const copySound = new Audio('/assets/audios/modern-technology-select.wav');
 
@@ -117,20 +117,20 @@ document.body.onmousedown = () => {
 document.body.onclick = e => {
 	if (e.target.classList.contains('pointer')) {
 		playAudio(copySound);
-		['name', 'hex', 'rgb'].forEach(prop => copyColorCodeByClassName(e.target, prop));
+		['name', 'hex', 'rgb'].forEach(key => copyColorCode(e.target, key));
 	}
 }
 
-function copyColorCodeByClassName(targetEl, prop) {
-	if (targetEl.classList.contains(prop)) {
-		const valueEl = targetEl.parentElement.querySelector(`.${prop}-value`);
+function copyColorCode(targetEl, key) {
+	if (targetEl.classList.contains(key)) {
+		const valueEl = targetEl.parentElement.querySelector(`.${key}-value`);
 		const content = valueEl.textContent.trim();
-		if (prop === 'name') return copyText(getMinifiedColorName(content));
+		if (key === 'name') return copyText(getMinifiedColorName(content));
 		copyText(content);
 	};
 }
 
 function getMinifiedColorName(colorName) {
-  return colorName.split(' ').map(text => text.toLowerCase()).join('');
+	return colorName.toLowerCase().replaceAll(' ', '');
 }
 </script>
