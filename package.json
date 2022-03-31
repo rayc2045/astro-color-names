@@ -6,10 +6,11 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "product": "astro build; astro preview"
   },
   "devDependencies": {
-    "astro": "^0.25.2",
+    "astro": "^0.25.4",
     "sass": "^1.49.9"
   }
 }
