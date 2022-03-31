@@ -130,20 +130,19 @@ async function init() {
 
 function hideCardsNotInQuery() {
 	const { colors } = getParamsByUrl();
-	if (colors) {
-		const colorQueries = colors.split(',');
-		let count = 0;
-		nameValueEls.forEach(el => {
-			if (!colorQueries.includes(
-				getMinifiedColorName(el.textContent.trim()))
-			) {
-				count++;
-				el.parentElement.classList.add('none');
-			}
-		});
-		if (count === nameValueEls.length) {
-			nameValueEls.forEach(el => el.parentElement.classList.remove('none'));
+	if (!colors) return;
+	const colorQueries = colors.split(' ');
+	let count = 0;
+	nameValueEls.forEach(el => {
+		if (!colorQueries.includes(
+			getMinifiedColorName(el.textContent.trim()))
+		) {
+			count++;
+			el.parentElement.classList.add('none');
 		}
+	});
+	if (count === nameValueEls.length) {
+		nameValueEls.forEach(el => el.parentElement.classList.remove('none'));
 	}
 }
 
