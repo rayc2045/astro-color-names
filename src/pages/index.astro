@@ -108,8 +108,6 @@ header
 <script type="module" hoist>
 import { getParamsByUrl, copyText, playAudio, audiosCatch } from '/src/scripts/utils';
 const copySound = new Audio('/assets/audios/modern-technology-select.wav');
-const { colors } = getParamsByUrl();
-const colorParams = colors.split(',');
 const nameValueEls = document.querySelectorAll('.name-value');
 
 window.onload = () => init();
@@ -127,21 +125,25 @@ document.body.onclick = e => {
 }
 
 async function init() {
-	hideCardsNotInParams();
+	hideCardsNotInQuery();
 }
 
-function hideCardsNotInParams() {
-	let count = 0;
-	nameValueEls.forEach(el => {
-		if (!colorParams.includes(
-			getMinifiedColorName(el.textContent.trim()))
-		) {
-			count++;
-			el.parentElement.classList.add('none');
+function hideCardsNotInQuery() {
+	const { colors } = getParamsByUrl();
+	if (colors) {
+		const colorQueries = colors.split(',');
+		let count = 0;
+		nameValueEls.forEach(el => {
+			if (!colorQueries.includes(
+				getMinifiedColorName(el.textContent.trim()))
+			) {
+				count++;
+				el.parentElement.classList.add('none');
+			}
+		});
+		if (count === nameValueEls.length) {
+			nameValueEls.forEach(el => el.parentElement.classList.remove('none'));
 		}
-	});
-	if (count === nameValueEls.length) {
-		nameValueEls.forEach(el => el.parentElement.classList.remove('none'));
 	}
 }
 
