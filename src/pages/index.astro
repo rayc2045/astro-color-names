@@ -9,26 +9,26 @@ const data = await res.json();
 
 <html lang="en">
 <head>
-	<MainHead />
+  <MainHead />
 </head>
 <body class="grid-center fixed">
-	<header class="animate">
-		<h1>Color Names</h1>
-		<p>
-			Modern browsers support 141 named colors. Use them by name, Hex color code or RGB value.
-		</p>
-	</header>
+  <header class="animate">
+    <h1>Color Names</h1>
+    <p>
+      Modern browsers support 141 named colors. Use them by name, Hex color code or RGB value.
+    </p>
+  </header>
 
-	<p class={`marketplace animate ${Object.keys(data[0].url).length > 1 ? '' : 'none'}`}>
-		Current marketplace:&nbsp;
-		<span title="Click to change the marketplace">
-			{ Object.keys(data[0].url)[0] }
-		</span>
-	</p>
+  <p class={`marketplace animate ${Object.keys(data[0].url).length > 1 ? '' : 'none'}`}>
+    Current marketplace:&nbsp;
+    <span title="Click to change the marketplace">
+      { Object.keys(data[0].url)[0] }
+    </span>
+  </p>
 
-	<ul class="cards animate">
-		{ data.map(color => <Card client:visible color={color}/>) }
-	</ul>
+  <ul class="cards animate">
+    { data.map(color => <Card client:visible color={color}/>) }
+  </ul>
 </body>
 </html>
 
@@ -36,79 +36,79 @@ const data = await res.json();
 @import '../styles/settings'
 
 header
-	width: 95%
-	line-height: 1.625em
-	opacity: 0
-	&.animate
-		animation: headerSlideIn .75s, headerFadeIn 1s
-		animation-fill-mode: forwards
-	h1
-		margin-top: .5em
-		font-size: 2.625em
-		font-weight: 500
-	p
-		margin: 0
-		font-size: 1.3125em
-		letter-spacing: .03125em
-		color: gray
-	+iPad
-		line-height: 2.6875rem
-		h1
-			margin: 0
-			font-size: .875em
-			letter-spacing: .1em
-			text-transform: uppercase
-			color: silver
-		p
-			font-size: 2.125em
-			color: $black
-	+desktop
-		font-size: .834em
-		line-height: 2.6em
+  width: 95%
+  line-height: 1.625em
+  opacity: 0
+  &.animate
+    animation: headerSlideIn .75s, headerFadeIn 1s
+    animation-fill-mode: forwards
+  h1
+    margin-top: .5em
+    font-size: 2.625em
+    font-weight: 500
+  p
+    margin: 0
+    font-size: 1.3125em
+    letter-spacing: .03125em
+    color: gray
+  +iPad
+    line-height: 2.6875rem
+    h1
+      margin: 0
+      font-size: .875em
+      letter-spacing: .1em
+      text-transform: uppercase
+      color: silver
+    p
+      font-size: 2.125em
+      color: $black
+  +desktop
+    font-size: .834em
+    line-height: 2.6em
 
 .marketplace
-	position: sticky
-	top: 0
-	z-index: 9999
-	margin: 0
-	padding: 1.5rem 0
-	padding-left: 5vw
-	width: 100%
-	opacity: 0
-	color: gray
-	background-color: rgba($white, 0.8)
-	backdrop-filter: blur(10px)
-	&.animate
-		animation: headerSlideIn .75s, headerFadeIn 1s
-		animation-fill-mode: forwards
-	span
-		padding: .5em .85em
-		font-size: .8em
-		cursor: pointer
-		border: .15em solid
-		border-radius: 1.5em
-		transition: background-color .3s
-		&::after
-			content: ">"
-			margin-left: .1em
-			display: inline-block
-			transform: rotate(90deg)
+  position: sticky
+  top: 0
+  z-index: 9999
+  margin: 0
+  padding: 1.5rem 0
+  padding-left: 5vw
+  width: 100%
+  opacity: 0
+  color: gray
+  background-color: rgba($white, 0.8)
+  backdrop-filter: blur(10px)
+  &.animate
+    animation: headerSlideIn .75s, headerFadeIn 1s
+    animation-fill-mode: forwards
+  span
+    padding: .5em .85em
+    font-size: .8em
+    cursor: pointer
+    border: .15em solid
+    border-radius: 1.5em
+    transition: background-color .3s
+    &::after
+      content: ">"
+      margin-left: .1em
+      display: inline-block
+      transform: rotate(90deg)
 
 .cards
-	display: flex
-	justify-content: center
-	flex-wrap: wrap
-	opacity: 0
-	&.animate
-		animation: cardsSlideIn 1s, cardsFadeIn 1s
-		animation-fill-mode: forwards
-	+desktop
-		font-size: .84em
+  display: flex
+  justify-content: center
+  flex-wrap: wrap
+  opacity: 0
+  &.animate
+    animation: cardsSlideIn 1s, cardsFadeIn 1s
+    animation-fill-mode: forwards
+  +desktop
+    font-size: .84em
 </style>
 
 <script type="module" hoist>
 import {
-	getQueries, getData, getNext, copyText, playAudio, audiosCatch
+  getQueries, getData, getNext, copyText, playAudio, audiosCatch
 } from '/src/scripts/utils';
 
 let colorsData = [];
@@ -124,72 +124,72 @@ const cardsEl = document.querySelector('.cards');
 window.onload = () => init();
 
 document.body.onmousedown = () => {
-	audiosCatch([copySound]);
-	document.body.onmousedown = '';
+  audiosCatch([copySound]);
+  document.body.onmousedown = '';
 }
 
 document.body.onclick = e => {
-	if (e.target.classList.contains('pointer')) {
-		playAudio(copySound);
-		['name', 'hex', 'rgb'].forEach(key => copyColorCode(e.target, key));
-	}
+  if (e.target.classList.contains('pointer')) {
+    playAudio(copySound);
+    ['name', 'hex', 'rgb'].forEach(key => copyColorCode(e.target, key));
+  }
 }
 
 marketplaceBtn.onclick = () => changeMarketplace();
 cardsEl.onanimationend = () => document.body.classList.remove('fixed');
 
 async function init() {
-	// colorsData = await getData('/src/data/colors.json'); // Can not fetch local data when build
-	colorsData = await getData('https://raw.githubusercontent.com/rayc2045/html-reserved-colors/main/src/data/colors.json');
+  // colorsData = await getData('/src/data/colors.json'); // Can not fetch local data when build
+  colorsData = await getData('https://raw.githubusercontent.com/rayc2045/html-reserved-colors/main/src/data/colors.json');
   const marketplaces = Object.keys(colorsData[0].url);
-	if (marketplaces.length > 1) marketplacesEl.classList.remove('none');
-	if (colorQueries.length) {
-		hideCardsNotInQuery();
+  if (marketplaces.length > 1) marketplacesEl.classList.remove('none');
+  if (colorQueries.length) {
+    hideCardsNotInQuery();
     const cardMatchesQuery = colorsData.filter(color =>
       colorQueries.includes(getMinifiedColorName(color.name))
     ).length;
-		if (cardMatchesQuery) updateSiteDescription();
-	}
+    if (cardMatchesQuery) updateSiteDescription();
+  }
 }
 
 function updateSiteDescription() {
-	siteDescriptionEl.textContent = siteDescriptionEl.textContent.replace(' 141 ', ' ');
+  siteDescriptionEl.textContent = siteDescriptionEl.textContent.replace(' 141 ', ' ');
 }
 
 function hideCardsNotInQuery() {
-	let count = 0;
+  let count = 0;
 
-	nameValueEls.forEach(el => {
-		const minifiedColorName = getMinifiedColorName(el.textContent);
-		if (!colorQueries.includes(minifiedColorName)) {
-			count++;
-			el.parentElement.classList.add('none');
-		}
-	});
+  nameValueEls.forEach(el => {
+    const minifiedColorName = getMinifiedColorName(el.textContent);
+    if (!colorQueries.includes(minifiedColorName)) {
+      count++;
+      el.parentElement.classList.add('none');
+    }
+  });
 
-	if (count === nameValueEls.length) {
-		nameValueEls.forEach(el => el.parentElement.classList.remove('none'));
-	}
+  if (count === nameValueEls.length) {
+    nameValueEls.forEach(el => el.parentElement.classList.remove('none'));
+  }
 }
 
 function copyColorCode(targetEl, key) {
-	if (targetEl.classList.contains(key)) {
-		const valueEl = targetEl.parentElement.querySelector(`.${key}-value`);
-		const content = valueEl.textContent.trim();
-		if (key === 'name') return copyText(getMinifiedColorName(content));
-		copyText(content);
-	};
+  if (targetEl.classList.contains(key)) {
+    const valueEl = targetEl.parentElement.querySelector(`.${key}-value`);
+    const content = valueEl.textContent.trim();
+    if (key === 'name') return copyText(getMinifiedColorName(content));
+    copyText(content);
+  };
 }
 
 function getMinifiedColorName(colorName) {
-	return colorName.toLowerCase().replaceAll(' ', '').trim();
+  return colorName.toLowerCase().replaceAll(' ', '').trim();
 }
 
 function changeMarketplace() {
-	const marketplaces = Object.keys(colorsData[0].url);
-	const currentMarketplace = marketplaceBtn.textContent.trim();
-	marketplaceBtn.textContent = getNext(marketplaces, currentMarketplace);
-	marketplaceAnchors.forEach((a, idx) =>
+  const marketplaces = Object.keys(colorsData[0].url);
+  const currentMarketplace = marketplaceBtn.textContent.trim();
+  marketplaceBtn.textContent = getNext(marketplaces, currentMarketplace);
+  marketplaceAnchors.forEach((a, idx) =>
     a.href = colorsData[idx].url[marketplaceBtn.textContent.trim()]
   );
 }
