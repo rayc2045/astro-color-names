@@ -90,6 +90,7 @@ header
 		transition: background-color .3s
 		&::after
 			content: ">"
+			margin-left: .1em
 			display: inline-block
 			transform: rotate(90deg)
 
@@ -106,9 +107,16 @@ header
 </style>
 
 <script type="module" hoist>
-import { getParamsByUrl, copyText, playAudio, audiosCatch } from '/src/scripts/utils';
+import {
+	getParamsByUrl, getData, getNext, copyText, playAudio, audiosCatch
+} from '/src/scripts/utils';
+
+let colorsData = [];
 const copySound = new Audio('/assets/audios/modern-technology-select.wav');
 const nameValueEls = document.querySelectorAll('.name-value');
+const marketplaceAnchors = document.querySelectorAll('.name-value a');
+const marketplacesEl = document.querySelector('.marketplace');
+const marketplaceBtn = document.querySelector('.marketplace > span');
 
 window.onload = () => init();
 
@@ -124,8 +132,13 @@ document.body.onclick = e => {
 	}
 }
 
+marketplaceBtn.onclick = () => changeMarketplace();
+
 async function init() {
 	hideCardsNotInQuery();
+	// colorsData = await getData('/src/data/colors.json'); // Can not fetch local data when build
+	colorsData = await getData('https://raw.githubusercontent.com/rayc2045/html-reserved-colors/main/src/data/colors.json');
+	if (Object.keys(colorsData[0].url).length > 1) marketplacesEl.classList.remove('none');
 }
 
 function hideCardsNotInQuery() {
@@ -157,5 +170,12 @@ function copyColorCode(targetEl, key) {
 
 function getMinifiedColorName(colorName) {
 	return colorName.toLowerCase().replaceAll(' ', '');
+}
+
+function changeMarketplace() {
+	const marketplaces = Object.keys(colorsData[0].url);
+	const currentMarketplace = marketplaceBtn.textContent.trim();
+	marketplaceBtn.textContent = getNext(marketplaces, currentMarketplace);
+	marketplaceAnchors.forEach((a, idx) => a.href = colorsData[idx].url[marketplaceBtn.textContent.trim()]);
 }
 </script>

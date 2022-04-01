@@ -18,6 +18,12 @@ export function getRepeatedItem(arr) {
   );
 }
 
+export function getNext(arr, currentValue) {
+  if (!arr.includes(currentValue)) return console.log(`Can not find ${currentValue} in ${arr}`);;
+  if (currentValue === arr[arr.length - 1]) return arr[0];
+  return arr[arr.indexOf(currentValue) + 1];
+}
+
 export function copyText(text) {
   navigator.clipboard.writeText(text);
 }
