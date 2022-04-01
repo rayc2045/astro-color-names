@@ -1,4 +1,11 @@
-export function getParamsByUrl(url = window.location.href) {
+export function getQueries(param) {
+  const queries = getParamsByUrl()[param].split(' ');
+  if (!queries.length) return [];
+  if (queries.length === 1 && queries[0] === '') return [];
+  return queries;
+}
+
+function getParamsByUrl(url = window.location.href) {
   const urlSearch = url.split('?')[1];
   const urlSearchParams = new URLSearchParams(urlSearch);
   return Object.fromEntries(urlSearchParams.entries());

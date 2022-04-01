@@ -108,11 +108,13 @@ header
 
 <script type="module" hoist>
 import {
-	getParamsByUrl, getData, getNext, copyText, playAudio, audiosCatch
+	getQueries, getData, getNext, copyText, playAudio, audiosCatch
 } from '/src/scripts/utils';
 
 let colorsData = [];
+const colorQueries = getQueries('colors');
 const copySound = new Audio('/assets/audios/modern-technology-select.wav');
+const siteDescriptionEl = document.querySelector('header > p');
 const nameValueEls = document.querySelectorAll('.name-value');
 const marketplaceAnchors = document.querySelectorAll('.name-value a');
 const marketplacesEl = document.querySelector('.marketplace');
@@ -135,25 +137,34 @@ document.body.onclick = e => {
 marketplaceBtn.onclick = () => changeMarketplace();
 
 async function init() {
-	hideCardsNotInQuery();
 	// colorsData = await getData('/src/data/colors.json'); // Can not fetch local data when build
 	colorsData = await getData('https://raw.githubusercontent.com/rayc2045/html-reserved-colors/main/src/data/colors.json');
 	if (Object.keys(colorsData[0].url).length > 1) marketplacesEl.classList.remove('none');
+	if (colorQueries.length) {
+		hideCardsNotInQuery();
+		if (colorsData.filter(
+			color => colorQueries.includes(getMinifiedColorName(color.name))).length
+		) {
+			updateSiteDescription();
+		}
+	}
+}
+
+function updateSiteDescription() {
+	siteDescriptionEl.textContent = siteDescriptionEl.textContent.replace(' 141 ', ' ');
 }
 
 function hideCardsNotInQuery() {
-	const { colors } = getParamsByUrl();
-	if (!colors) return;
-	const colorQueries = colors.split(' ');
 	let count = 0;
+
 	nameValueEls.forEach(el => {
-		if (!colorQueries.includes(
-			getMinifiedColorName(el.textContent.trim()))
-		) {
+		const minifiedColorName = getMinifiedColorName(el.textContent);
+		if (!colorQueries.includes(minifiedColorName)) {
 			count++;
 			el.parentElement.classList.add('none');
 		}
 	});
+
 	if (count === nameValueEls.length) {
 		nameValueEls.forEach(el => el.parentElement.classList.remove('none'));
 	}
