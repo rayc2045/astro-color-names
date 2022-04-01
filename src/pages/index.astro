@@ -11,7 +11,7 @@ const data = await res.json();
 <head>
 	<MainHead />
 </head>
-<body class="grid-center">
+<body class="grid-center fixed">
 	<header class="animate">
 		<h1>Color Names</h1>
 		<p>
@@ -119,6 +119,7 @@ const nameValueEls = document.querySelectorAll('.name-value');
 const marketplaceAnchors = document.querySelectorAll('.name-value a');
 const marketplacesEl = document.querySelector('.marketplace');
 const marketplaceBtn = document.querySelector('.marketplace > span');
+const cardsEl = document.querySelector('.cards');
 
 window.onload = () => init();
 
@@ -135,6 +136,7 @@ document.body.onclick = e => {
 }
 
 marketplaceBtn.onclick = () => changeMarketplace();
+cardsEl.onanimationend = () => document.body.classList.remove('fixed');
 
 async function init() {
 	// colorsData = await getData('/src/data/colors.json'); // Can not fetch local data when build
