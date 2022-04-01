@@ -1,5 +1,8 @@
 export function getQueries(param) {
-  const queries = getParamsByUrl()[param].split(' ');
+  const params = getParamsByUrl();
+  if (!Object.keys(params).length) return [];
+  if (!params[param]) return [];
+  const queries = params[param].split(' ');
   if (!queries.length) return [];
   if (queries.length === 1 && queries[0] === '') return [];
   return queries;
