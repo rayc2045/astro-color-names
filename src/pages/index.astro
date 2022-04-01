@@ -141,14 +141,14 @@ cardsEl.onanimationend = () => document.body.classList.remove('fixed');
 async function init() {
 	// colorsData = await getData('/src/data/colors.json'); // Can not fetch local data when build
 	colorsData = await getData('https://raw.githubusercontent.com/rayc2045/html-reserved-colors/main/src/data/colors.json');
-	if (Object.keys(colorsData[0].url).length > 1) marketplacesEl.classList.remove('none');
+  const marketplaces = Object.keys(colorsData[0].url);
+	if (marketplaces.length > 1) marketplacesEl.classList.remove('none');
 	if (colorQueries.length) {
 		hideCardsNotInQuery();
-		if (colorsData.filter(
-			color => colorQueries.includes(getMinifiedColorName(color.name))).length
-		) {
-			updateSiteDescription();
-		}
+    const cardMatchesQuery = colorsData.filter(color =>
+      colorQueries.includes(getMinifiedColorName(color.name))
+    ).length;
+		if (cardMatchesQuery) updateSiteDescription();
 	}
 }
 
@@ -189,6 +189,8 @@ function changeMarketplace() {
 	const marketplaces = Object.keys(colorsData[0].url);
 	const currentMarketplace = marketplaceBtn.textContent.trim();
 	marketplaceBtn.textContent = getNext(marketplaces, currentMarketplace);
-	marketplaceAnchors.forEach((a, idx) => a.href = colorsData[idx].url[marketplaceBtn.textContent.trim()]);
+	marketplaceAnchors.forEach((a, idx) =>
+    a.href = colorsData[idx].url[marketplaceBtn.textContent.trim()]
+  );
 }
 </script>
