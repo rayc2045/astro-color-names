@@ -108,7 +108,7 @@ header
 
 <script type="module" hoist>
 import {
-  getQueries, getData, getNext, copyText, playAudio, audiosCatch
+  getQueries, getData, getNextItem, copyText, playAudio, audiosCatch
 } from '/src/scripts/utils';
 
 let colorsData = [];
@@ -189,7 +189,7 @@ function getMinifiedColorName(colorName) {
 function changeMarketplace() {
   const marketplaces = Object.keys(colorsData[0].url);
   const currentMarketplace = marketplaceBtn.textContent.trim();
-  marketplaceBtn.textContent = getNext(marketplaces, currentMarketplace);
+  marketplaceBtn.textContent = getNextItem(marketplaces, currentMarketplace);
   marketplaceAnchors.forEach((a, idx) =>
     a.href = colorsData[idx].url[marketplaceBtn.textContent.trim()]
   );
