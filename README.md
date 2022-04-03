@@ -1,4 +1,4 @@
-# Astro Color Picker｜Build A Color Picker App with Astro
+# Astro Color Picker｜使用框架 Astro 打造的色票複製工具
 
 ![astro-colors.netlify.app](https://cdn.dribbble.com/users/3800131/screenshots/17078912/media/2e27671e28657e221e755806a709f630.png)
 
