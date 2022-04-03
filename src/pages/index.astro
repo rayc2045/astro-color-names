@@ -108,11 +108,11 @@ header
 
 <script type="module" hoist>
 import {
-  getQueries, getData, getNextItem, copyText, playAudio, audiosCatch
+  getParamsByUrl, getData, getNextItem, copyText, playAudio, audiosCatch
 } from '/src/scripts/utils';
 
 let colorsData = [];
-const colorQueries = getQueries('colors');
+const colorQueries = getParamsByUrl().colors ?? [];
 const copySound = new Audio('/assets/audios/modern-technology-select.wav');
 const siteDescriptionEl = document.querySelector('header > p');
 const nameValueEls = document.querySelectorAll('.name-value');

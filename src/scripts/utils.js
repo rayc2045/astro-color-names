@@ -1,17 +1,13 @@
-export function getQueries(param) {
-  const params = getParamsByUrl();
-  if (!Object.keys(params).length) return [];
-  if (!params[param]) return [];
-  const queries = params[param].split(' ');
-  if (!queries.length) return [];
-  if (queries.length === 1 && queries[0] === '') return [];
-  return queries;
-}
-
-function getParamsByUrl(url = window.location.href) {
+export function getParamsByUrl(url = window.location.href) {
   const urlSearch = url.split('?')[1];
   const urlSearchParams = new URLSearchParams(urlSearch);
-  return Object.fromEntries(urlSearchParams.entries());
+  const entries = Object.fromEntries(urlSearchParams.entries());
+  Object.keys(entries).forEach(entry => {
+    const split = entries[entry].split(' ');
+    if (split.length === 1 && split[0] === '') return (entries[entry] = []);
+    entries[entry] = split;
+  });
+  return entries;
 }
 
 export async function getData(api) {
@@ -29,7 +25,7 @@ export function getRepeatedItem(arr) {
 }
 
 export function getNextItem(arr, currentValue) {
-  if (!arr.includes(currentValue)) return console.log(`Can not find ${currentValue} in ${arr}`);;
+  if (!arr.includes(currentValue)) return console.log(`Can not find ${currentValue} in ${arr}`);
   if (currentValue === arr[arr.length - 1]) return arr[0];
   return arr[arr.indexOf(currentValue) + 1];
 }
