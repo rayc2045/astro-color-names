@@ -1,6 +1,6 @@
 # Astro Color Picker｜Build A Color Picker App with Astro
 
-![astro-colors.netlify.app](https://cdn.dribbble.com/users/3800131/screenshots/17078957/media/6ceca176980d763462e4b648ad37107a.png)
+![astro-colors.netlify.app](https://cdn.dribbble.com/users/3800131/screenshots/17078912/media/2e27671e28657e221e755806a709f630.png)
 
 [> Astro Color Picker](https://astro-colors.netlify.app/)
 
