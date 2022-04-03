@@ -135,6 +135,7 @@ document.body.onclick = e => {
   }
 }
 
+document.body.ondblclick = () => scrollTo(0, 0);
 marketplaceBtn.onclick = () => changeMarketplace();
 cardsEl.onanimationend = () => document.body.classList.remove('fixed');
 
