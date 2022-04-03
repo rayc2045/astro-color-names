@@ -15,6 +15,7 @@
 - 使用 Sass 做出在頁面引入的 [全域樣式](https://github.com/rayc2045/astro-color-picker/blob/main/src/styles/global.sass) 和元件中配合使用的 [設定樣式](https://github.com/rayc2045/astro-color-picker/blob/main/src/styles/_settings.sass)
 - 將通用型程式碼 ([utils.js](https://github.com/rayc2045/astro-color-picker/blob/main/src/scripts/utils.js)) 與專案用程式碼進行拆分，需要時再模組化引入做使用 (module import)
 - 以原生 DOM 操作實現透過網址查詢參數 (Query String) [過濾色票卡片的功能](https://astro-colors.netlify.app/?colors=darkorange+indianred+sandybrown+seagreen+darkseagreen+lightslategray)
+- 專案打包後使用 VS Code 套件 [MinifyAll](https://marketplace.visualstudio.com/items?itemName=josee9988.minifyall) 進一步壓縮 HTML 檔案
 - 其他見原專案：[HTML Reserved Colors](https://github.com/rayc2045/html-reserved-colors)
 
 ### Commands
