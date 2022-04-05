@@ -2,9 +2,7 @@
 import MainHead from '../components/MainHead.astro';
 import Card from '../components/Card.astro';
 
-// import data from '../data/colors.json';
-const res = await fetch('https://raw.githubusercontent.com/rayc2045/html-reserved-colors/main/src/data/colors.json')
-const data = await res.json();
+const colors = await fetch('src/data/colors.json').then(r => r.json());
 ---
 
 <html lang="en">
@@ -15,19 +13,19 @@ const data = await res.json();
   <header class="animate">
     <h1>Color Names</h1>
     <p>
-      Modern browsers support { data.length } named colors. Use them by name, Hex color code or RGB value.
+      Modern browsers support { colors.length } named colors. Use them by name, Hex color code or RGB value.
     </p>
   </header>
 
-  <p class={`marketplace animate ${Object.keys(data[0].url).length > 1 ? '' : 'none'}`}>
+  <p class={`marketplace animate ${Object.keys(colors[0].url).length > 1 ? '' : 'none'}`}>
     Current marketplace:&nbsp;
     <span title="Click to change the marketplace">
-      { Object.keys(data[0].url)[0] }
+      { Object.keys(colors[0].url)[0] }
     </span>
   </p>
 
   <ul class="cards animate">
-    { data.map(color => <Card client:visible color={color}/>) }
+    { colors.map(color => <Card client:visible color={color}/>) }
   </ul>
 </body>
 </html>
