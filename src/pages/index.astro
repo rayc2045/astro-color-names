@@ -2,7 +2,9 @@
 import MainHead from '../components/MainHead.astro';
 import Card from '../components/Card.astro';
 
-const colors = await fetch('src/data/colors.json').then(r => r.json());
+// import colors from '../data/colors.json';
+// const colors = await fetch('src/data/colors.json').then(r => r.json());
+const colors = await fetch('https://raw.githubusercontent.com/rayc2045/html-reserved-colors/main/src/data/colors.json').then(r => r.json());
 ---
 
 <html lang="en">
